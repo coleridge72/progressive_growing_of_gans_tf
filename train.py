@@ -2,6 +2,7 @@ import logging
 import numpy as np
 import neuralgym as ng
 
+from neuralgym.callbacks import DiscriminatorMultiGPUTrainer
 import network
 
 
@@ -14,25 +15,20 @@ def train_gan(config):
     Args:
         config (ng.Config): all hyperparameters
 
-    Returns: TODO
-
+    Returns:
     """
     logger.info('Start to train progressive gan.')
     # get dataset
     with open(config.DATA_FLIST[config.DATASET][0]) as f:
         fnames = f.read().splitlines()
-    train_data = ng.data.DataFromFNames(
+    data = ng.data.DataFromFNames(
         fnames, config.IMG_SHAPES, random_crop=config.RANDOM_CROP)
 
     # init networks
-    G = network.Network(
+    model = model.ProgressiveGAN(
         num_channels=None, resolution=None,
         label_size=None, config)
-    D = network.Network(
-        num_channels=None, resolution=None,
-        label_size=None, config)
-    Gs = G.create_temporally_smoothed_version(
-        beta=G_smoothing, explicit_updates=True)
+    g_vars, d_vars, losses = model.build_graph_with_losses(data, config)
 
     g_optimizer = tf.train.AdamOptimizer(
         lr,
@@ -40,6 +36,12 @@ def train_gan(config):
         beta2=config.TRAIN['adam_beta2'],
         epsilon=config.TRAIN['adam_epsilon'])
     d_optimizer = g_optimizer
+
+    discriminator_training_callback = DiscriminatorMultiGPUTrainer(
+        1, config.NUM_GPUS, multigpu_graph_def,
+        {'model': model, 'data': data, 'config': config, 'loss_type': 'd',
+         'summary': False},
+        d_optimizer, d_vars, steps=config.TRAIN['D_training_repeats'])
 
     log_prefix = 'model_logs/' + '_'.join([
         str(ng.date_uid()),socket.gethostname(), config.DATASET,
@@ -70,6 +72,24 @@ def train_gan(config):
     ])
 
     trainer.train()
+
+
+def multigpu_graph_def(gpu_id, model, data, config, loss_type='g'):
+    with tf.device('/cpu:0'):
+        images = data.data_pipeline(config.BATCH_SIZE)
+
+    if summary and gpu_id == 0:
+        _, _, losses = model.build_graph_with_losses(
+            images, config, summary=True)
+    else:
+        _, _, losses = model.build_graph_with_losses(
+            images, config)
+    if loss_type == 'g':
+        return losses['g_loss']
+    elif loss_type == 'd':
+        return losses['d_loss']
+    else:
+        raise ValueError('loss type is not supported.')
 
 
 if __name__ == "__main__":
