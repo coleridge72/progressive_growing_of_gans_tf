@@ -1,6 +1,8 @@
 import logging
 import numpy as np
+import socket
 import neuralgym as ng
+import tensorflow as tf
 
 import progressive_model
 
@@ -9,12 +11,12 @@ logger = logging.getLogger()
 
 
 def multigpu_graph_def(model, data, config, gpu_id=0, loss_type='g'):
-    if gpu_id == 0:
+    if gpu_id == 0 and loss_type == 'g':
         _, _, losses = model.build_graph_with_losses(
-            images, config, summary=True)
+            data, config, summary=True)
     else:
         _, _, losses = model.build_graph_with_losses(
-            images, config)
+            data, config)
     if loss_type == 'g':
         return losses['g_loss']
     elif loss_type == 'd':
@@ -40,21 +42,28 @@ def train_gan(config):
 
     # init model
     model = progressive_model.ProgressiveGAN(1024, config)
-    from IPython import embed; embed()
-    g_vars, d_vars, losses = model.build_graph_with_losses(data, config)
+    g_vars, d_vars, losses = model.build_graph_with_losses(
+        data, config, reuse=False)
 
+    lr = tf.get_variable(
+        'lr', shape=[], trainable=False,
+        initializer=tf.constant_initializer(1e-4))
     g_optimizer = tf.train.AdamOptimizer(
         lr,
-        beta1=config.TRAIN['adam_beta1'],
-        beta2=config.TRAIN['adam_beta2'],
-        epsilon=config.TRAIN['adam_epsilon'])
+        beta1=0.5,
+        beta2=0.9,
+        # beta1=config.TRAIN['adam_beta1'],
+        # beta2=config.TRAIN['adam_beta2'],
+        # epsilon=config.TRAIN['adam_epsilon']
+    )
     d_optimizer = g_optimizer
 
     discriminator_training_callback = ng.callbacks.SecondaryTrainer(
         pstep=1,
         optimizer=d_optimizer,
         var_list=d_vars,
-        max_iters=config.TRAIN['D_training_repeats'],
+        max_iters=5,
+        # max_iters=config.TRAIN['D_training_repeats'],
         graph_def=multigpu_graph_def,
         graph_def_kwargs={
             'model': model, 'data': data, 'config': config, 'loss_type': 'd'},
@@ -64,7 +73,7 @@ def train_gan(config):
         str(ng.date_uid()),socket.gethostname(), config.DATASET,
         config.LOG_DIR])
 
-    trainer = MultiGPUTrainer(
+    trainer = ng.train.Trainer(
         config=config,
         optimizer=g_optimizer,
         var_list=g_vars,

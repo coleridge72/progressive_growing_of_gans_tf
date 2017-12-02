@@ -1,6 +1,9 @@
 # tunable training setting
 DATASET: 'celeba_hq'
-IMG_SHAPES: [1024, 1024, 3]
+IMG_SHAPES: [8, 8, 3]
+BATCH_SIZE: 256
+LAST_RESOLUTION: 4
+CURRENT_RESOLUTION: 8
 RANDOM_SEED: 1000
 LOG_DIR: 'celeba_hq_baseline'
 NUM_GPUS: 1
