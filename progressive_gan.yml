@@ -12,9 +12,9 @@ TRAIN_SPE: 10000
 MAX_ITERS: 1000000
 VIZ_MAX_OUT: 30
 DATA_FLIST:
-  celeba-hq: [
+  celeba_hq: [
     'data/celeba_hq/train_shuffled.flist',
-    'data/celeba_hq/val.flist'
+    'data/celeba_hq/val.flist',
   ]
 
 # inherit from config.py: https://github.com/tkarras/progressive_growing_of_gans/blob/master/config.py

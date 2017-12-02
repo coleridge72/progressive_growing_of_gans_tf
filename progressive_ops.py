@@ -3,6 +3,9 @@ import tensorflow as tf
 from neuralgym.ops.summary_ops import scalar_summary, images_summary
 
 
+act = lambda x: pixel_norm(wscale_layer(tf.nn.leaky_relu(x)))
+
+
 def nn_block(x, cnum, name):
     """Basic block for progressive gan consists a stack of
     3x3 conv, leaky_relu, 3x3 conv and leaky_relu.
@@ -15,13 +18,12 @@ def nn_block(x, cnum, name):
 
     """
     y = x
-    act = lambda x: pixel_norm(wscale_layer(tf.nn.leaky_relu(x)))
     y = tf.layers.conv2d(y, cnum, 3, 1, activation=act, name=name+'_layer1')
     y = tf.layers.conv2d(y, cnum, 3, 1, activation=act, name=name+'_layer2')
     return y
 
 
-def nn_upsample(x):
+def upsample(x, scale=2):
     """Basic upsample layer.
 
     Args:
@@ -30,10 +32,12 @@ def nn_upsample(x):
     Returns: TODO
 
     """
-    pass
+    xs = tf.shape(x)
+    return tf.image.resize_bilinear(
+        x, [scale*xs[1], scale*xs[2]], align_corners=False)
 
 
-def nn_downsample(x):
+def downsample(x, scale=.5):
     """Basic downsample layer.
 
     Args:
@@ -42,7 +46,11 @@ def nn_downsample(x):
     Returns: TODO
 
     """
-    pass
+    xs = tf.shape(x)
+    return tf.image.resize_bilinear(
+        x,
+        [tf.cast(scale*xs[1], tf.int32), tf.cast(scale*xs[2], tf.int32)],
+        align_corners=False)
 
 
 def pixel_norm(x):
