@@ -18,39 +18,11 @@ def nn_block(x, cnum, name):
 
     """
     y = x
-    y = tf.layers.conv2d(y, cnum, 3, 1, activation=act, name=name+'_layer1')
-    y = tf.layers.conv2d(y, cnum, 3, 1, activation=act, name=name+'_layer2')
+    y = tf.layers.conv2d(
+        y, cnum, 3, 1, padding='same', activation=act, name=name+'_layer1')
+    y = tf.layers.conv2d(
+        y, cnum, 3, 1, padding='same', activation=act, name=name+'_layer2')
     return y
-
-
-def upsample(x, scale=2):
-    """Basic upsample layer.
-
-    Args:
-        x (TODO): TODO
-
-    Returns: TODO
-
-    """
-    xs = tf.shape(x)
-    return tf.image.resize_bilinear(
-        x, [scale*xs[1], scale*xs[2]], align_corners=False)
-
-
-def downsample(x, scale=.5):
-    """Basic downsample layer.
-
-    Args:
-        x (TODO): TODO
-
-    Returns: TODO
-
-    """
-    xs = tf.shape(x)
-    return tf.image.resize_bilinear(
-        x,
-        [tf.cast(scale*xs[1], tf.int32), tf.cast(scale*xs[2], tf.int32)],
-        align_corners=False)
 
 
 def pixel_norm(x):
@@ -84,7 +56,7 @@ def wscale_layer(x):
 
 def progressive_kt(name, steps=10000):
     kt = tf.get_variable(
-        name + '_kt', dtype=tf.float32, initializer=0.0, trainable=False)
+        name, dtype=tf.float32, initializer=0.0, trainable=False)
     scalar_summary('kt/'+name, kt)
     update_kt = tf.assign(kt, tf.clip_by_value(kt + 1. / steps, 0., 1.))
     with tf.control_dependencies([update_kt]):
