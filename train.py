@@ -35,10 +35,10 @@ def train_gan(config):
     """
     logger.info('Start to train progressive gan.')
     # get dataset
-    with open(config.DATA_FLIST[config.DATASET][0]) as f:
+    with open(config.DATA_FLIST[config.DATASET]) as f:
         fnames = f.read().splitlines()
-    data = ng.data.DataFromFNames(
-        fnames, config.IMG_SHAPES)
+    img_shapes = [config.CURRENT_RESOLUTION, config.CURRENT_RESOLUTION, 3]
+    data = ng.data.DataFromFNames(fnames, img_shapes)
 
     # init model
     model = progressive_model.ProgressiveGAN(1024, config)
@@ -89,7 +89,7 @@ def train_gan(config):
 
     trainer.add_callbacks([
         ng.callbacks.WeightsViewer(),
-        # ng.callbacks.ModelRestorer(trainer.context['saver'], dump_prefix='', optimistic=True),
+        # ng.callbacks.ModelRestorer(trainer.context['saver'], dump_prefix=config.RESTORE_PREFIX, optimistic=True),
         discriminator_training_callback,
         ng.callbacks.ModelSaver(config.TRAIN_SPE, trainer.context['saver'], log_prefix+'/snap'),
         ng.callbacks.SummaryWriter((config.VAL_PSTEPS//1), trainer.context['summary_writer'], tf.summary.merge_all()),

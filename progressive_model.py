@@ -41,7 +41,8 @@ class ProgressiveGAN(Model):
         get_cnum = lambda x: int(min(512, 2 ** (13 - np.log2(x))))
 
         x = z
-        with tf.variable_scope(name, reuse=(reuse or current_resolution!=8)):
+        # with tf.variable_scope(name, reuse=(reuse or current_resolution!=8)):
+        with tf.variable_scope(name, reuse=(reuse or False)):
             # [-1, 4, 4, 512]
             x = tf.reshape(x, [-1, 1, 1, 512])
             x = tf.layers.conv2d_transpose(
@@ -50,7 +51,8 @@ class ProgressiveGAN(Model):
                 x, 512, 3, padding='same', activation=act, name='conv_in')
         block_resolution = 4
 
-        with tf.variable_scope(name, reuse=True):
+        # with tf.variable_scope(name, reuse=True):
+        with tf.variable_scope(name, reuse=(reuse or False)):
             for i in range(int(np.log2(current_resolution) - 3)):
                 cnum = get_cnum(block_resolution)
                 logger.info('Restore block, input resolution: {}, cnum: {}, '
@@ -111,7 +113,8 @@ class ProgressiveGAN(Model):
 
             kt = progressive_kt('%s_kt' % block_resolution)
 
-        with tf.variable_scope(name, reuse=True):
+        # with tf.variable_scope(name, reuse=True):
+        with tf.variable_scope(name, reuse=(reuse or False)):
             if current_resolution != 8:
                 cnum = get_cnum(current_resolution)
                 x = tf.layers.conv2d(
@@ -128,7 +131,8 @@ class ProgressiveGAN(Model):
                 x = avg_pool(x)
                 block_resolution //= 2
 
-        with tf.variable_scope(name, reuse=(reuse or current_resolution!=8)):
+        # with tf.variable_scope(name, reuse=(reuse or current_resolution!=8)):
+        with tf.variable_scope(name, reuse=(reuse or False)):
             x = tf.layers.conv2d(
                 x, 512, 3, 2, padding='same', activation=act, name='conv_out1')
             x = tf.layers.conv2d(
