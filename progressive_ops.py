@@ -54,7 +54,7 @@ def wscale_layer(x):
     return y
 
 
-def progressive_kt(name, steps=10000):
+def progressive_kt(name, steps=5000):
     kt = tf.get_variable(
         name, dtype=tf.float32, initializer=0.0, trainable=False)
     scalar_summary('kt/'+name, kt)

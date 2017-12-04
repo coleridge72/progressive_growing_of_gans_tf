@@ -89,7 +89,7 @@ def train_gan(config):
 
     trainer.add_callbacks([
         ng.callbacks.WeightsViewer(),
-        # ng.callbacks.ModelRestorer(trainer.context['saver'], dump_prefix=config.RESTORE_PREFIX, optimistic=True),
+        ng.callbacks.ModelRestorer(trainer.context['saver'], dump_prefix=config.RESTORE_PREFIX, optimistic=True),
         discriminator_training_callback,
         ng.callbacks.ModelSaver(config.TRAIN_SPE, trainer.context['saver'], log_prefix+'/snap'),
         ng.callbacks.SummaryWriter((config.VAL_PSTEPS//1), trainer.context['summary_writer'], tf.summary.merge_all()),
