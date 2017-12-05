@@ -1,11 +1,12 @@
 # tunable training setting
 DATASET: 'celeba_hq'
-BATCH_SIZE: 128
-LAST_RESOLUTION: 8
-CURRENT_RESOLUTION: 16
-RESTORE_PREFIX: 'model_logs/20171203125910919153_ilcomp5q_celeba_hq_celeba_hq_8x8/snap'
+BATCH_SIZE: 48
+LAST_RESOLUTION: 16
+CURRENT_RESOLUTION: 32
+# RESTORE_PREFIX: 'model_logs/20171203125910919153_ilcomp5q_celeba_hq_celeba_hq_8x8/snap'
+RESTORE_PREFIX: 'model_logs/20171204194751639172_ilcomp5q_celeba_hq_celeba_hq_16x16/snap'
 RANDOM_SEED: 1000
-LOG_DIR: 'celeba_hq_16x16'
+LOG_DIR: 'celeba_hq_32x32'
 NUM_GPUS: 1
 GPU_ID: -1
 

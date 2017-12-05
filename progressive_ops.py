@@ -60,4 +60,5 @@ def progressive_kt(name, steps=5000):
     scalar_summary('kt/'+name, kt)
     update_kt = tf.assign(kt, tf.clip_by_value(kt + 1. / steps, 0., 1.))
     with tf.control_dependencies([update_kt]):
-        return kt
+        kt = tf.identity(kt)
+    return kt

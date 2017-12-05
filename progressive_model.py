@@ -161,7 +161,7 @@ class ProgressiveGAN(Model):
 
         if summary:
             images_summary(images, 'real_images', config.VIZ_MAX_OUT)
-            images_summary(fake, 'real_images', config.VIZ_MAX_OUT)
+            images_summary(fake, 'fake_images', config.VIZ_MAX_OUT)
 
         neg = self.D_paper(
             fake,
