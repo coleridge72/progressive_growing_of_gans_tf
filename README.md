@@ -1,11 +1,27 @@
 ## Progressive Growing of GANs for Improved Quality, Stability, and Variation
 
-This repository contains the **TensorFlow re-implementation** of [original implementation (Theano and Lasagne)](https://github.com/tkarras/progressive_growing_of_gans).
+This repository contains the **TensorFlow re-implementation (both training and sampling)** of [original implementation (Theano and Lasagne)](https://github.com/tkarras/progressive_growing_of_gans). The author of this repo is currently training and debugging on 1024x1024 CelebA dataset.
+
+## Dataset: 1024x1024 CelebA faces
+
+PNG images can be downloaded from [Google Drive](https://drive.google.com/open?id=1_BsFYYGVvcjcPNhPam2STBDFG3eKAdKr).
+
+<img src="https://user-images.githubusercontent.com/22609465/33633338-0b825560-d9d6-11e7-8177-2840f9dd9a93.png" width="425"/> <img src="https://user-images.githubusercontent.com/22609465/33633711-5aa770a2-d9d7-11e7-9517-916c8169d984.png" width="425"/> 
+Example High-Resolution CelebA images
+
+## Training
+
+The author of this repo is currently training and debuging on 1024x1024 CelebA dataset. If you want to try early, please modifying `progressive_gan.yml` accordingly and run `python train.py`.
+
+## TensorBoard
+
+Visualization on TensorBoard are supported.
 
 ## License
 
-The source code is available for NonCommercial use. License inherits from Original [NVIDIA License](https://github.com/tkarras/progressive_growing_of_gans/blob/master/LICENSE).
+License inherits from original [NVIDIA License](https://github.com/tkarras/progressive_growing_of_gans/blob/master/LICENSE).
 
+## Requirements
 
-## Compatibility
-
+* [NeuralGym 0.0.1-alpha](https://github.com/JiahuiYu/neuralgym)
+* [TensorFlow 1.4](https://www.tensorflow.org/)
