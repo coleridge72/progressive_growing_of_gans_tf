@@ -1,6 +1,6 @@
-## Progressive Growing of GANs for Improved Quality, Stability, and Variation
+# Progressive Growing of GANs for Improved Quality, Stability, and Variation on TensorFlow
 
-This repository contains the **TensorFlow re-implementation (both training and sampling)** of [original implementation (Theano and Lasagne)](https://github.com/tkarras/progressive_growing_of_gans). The author of this repo is currently training and debugging on 1024x1024 CelebA dataset.
+This repository contains the **TensorFlow re-implementation (both training and sampling)** of [original implementation (Theano and Lasagne)](https://github.com/tkarras/progressive_growing_of_gans). The author of this repo is actively training and debugging on 1024x1024 CelebA dataset.
 
 ## Dataset: 1024x1024 CelebA faces
 
@@ -11,7 +11,7 @@ Example High-Resolution CelebA images
 
 ## Training
 
-The author of this repo is currently training and debuging on 1024x1024 CelebA dataset. If you want to try early, please modifying `progressive_gan.yml` accordingly and run `python train.py`.
+The author of this repo is actively training and debuging on 1024x1024 CelebA dataset. If you want to try early, please modifying `progressive_gan.yml` accordingly and run `python train.py`.
 
 ## TensorBoard
 
