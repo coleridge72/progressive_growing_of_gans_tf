@@ -21,8 +21,8 @@ class ProgressiveGAN(Model):
 
     """Tensorflow model of progressive gan.
         Args:
-            resolution (TODO): TODO
-            config (TODO): TODO
+            resolution (int): image resolution, e.g. 1024
+            config : config file for training
     """
 
     def __init__(self, resolution, config):
@@ -33,7 +33,7 @@ class ProgressiveGAN(Model):
     def G_paper(self, z, last_resolution, current_resolution, name='G_paper',
                 reuse=False):
         """Build graph for generator.
-        Returns: TODO
+        Returns: tensor of image
 
         """
         assert last_resolution in [4, 8, 16, 32, 64, 128, 256, 512]
@@ -85,7 +85,7 @@ class ProgressiveGAN(Model):
     def D_paper(self, x, last_resolution, current_resolution, reuse=False,
                 name='D_paper'):
         """Build graph for discriminator.
-        Returns: TODO
+        Returns: logit of classification.
 
         """
         assert last_resolution in [4, 8, 16, 32, 64, 128, 256, 512]
@@ -145,10 +145,10 @@ class ProgressiveGAN(Model):
         """Build training graph and losses.
 
         Args:
-            data (TODO): TODO
-            config (TODO): TODO
+            data : dataset for sampling
+            config : config of training
 
-        Returns: TODO
+        Returns: vars of generator, vars of discriminator, loss of training
 
         """
         images = data.data_pipeline(config.BATCH_SIZE)

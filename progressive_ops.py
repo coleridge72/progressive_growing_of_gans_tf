@@ -11,10 +11,11 @@ def nn_block(x, cnum, name):
     3x3 conv, leaky_relu, 3x3 conv and leaky_relu.
 
     Args:
-        x (TODO): TODO
-        cnum (TODO): TODO
+        x (tf.Tensor): tensor input
+        cnum (int): channel number
 
-    Returns: TODO
+    Returns:
+        tf.Tensor: tensor output
 
     """
     y = x
@@ -29,9 +30,10 @@ def pixel_norm(x):
     """Pixel normalization proposed in progressive GAN.
 
     Args:
-        x (TODO): TODO
+        x (tf.Tensor): tensor input
 
-    Returns: TODO
+    Returns:
+        tf.Tensor: tensor output
 
     """
     y =  x / tf.sqrt(
@@ -45,16 +47,31 @@ def wscale_layer(x):
     in progressive GAN.
 
     Args:
-        x (TODO): TODO
+        x (tf.Tensor): tensor input
 
-    Returns: TODO
+    Returns:
+        tf.Tensor: tensor output
 
     """
     y = x
+    raise NotImplementedError, "wscale layer is not implemented yet."
     return y
 
 
 def progressive_kt(name, steps=5000):
+    """ Claim a progressive changing scalar variable of kt, where steps
+    indicates how many steps are required to progressively changing kt from 0
+    to 1.
+
+    Args:
+        name (string): the name of kt will be 'kt/'+name
+        steps (int): how many steps (batches) are required to change kt from 0
+            to 1
+
+    Returns:
+        tf.Tensor: scalar tensor kt
+
+    """
     kt = tf.get_variable(
         name, dtype=tf.float32, initializer=0.0, trainable=False)
     scalar_summary('kt/'+name, kt)

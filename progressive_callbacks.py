@@ -13,7 +13,8 @@ logger = logging.getLogger()
 
 class ProgressiveGrowingGAN(ScheduledCallback):
 
-    """Docstring for ProgressiveGrowingGAN.
+    """This class is for automatically change training image resolution from
+    8x8 to 1024x1024 for progressive growing of gans.
 
     Rebuild graph for progressive growing of gan.
     """
@@ -30,13 +31,11 @@ class ProgressiveGrowingGAN(ScheduledCallback):
         self._d_graph_def_kwargs = d_graph_def_kwargs
 
     def run(self, sess, step):
-        """TODO: Docstring for run.
+        """Automatic run function for callback.
 
         Args:
-            sess (TODO): TODO
-            step (TODO): TODO
-
-        Returns: TODO
+            sess (tf.Session): session
+            step (int): current training step
 
         """
         callback_log(
