@@ -4,7 +4,7 @@ This repository contains the **TensorFlow re-implementation (both training and s
 
 ## Dataset: 1024x1024 CelebA faces
 
-PNG images can be downloaded from [Google Drive](https://drive.google.com/open?id=1_BsFYYGVvcjcPNhPam2STBDFG3eKAdKr).
+PNG images can be downloaded from [Google Drive](https://drive.google.com/open?id=1_BsFYYGVvcjcPNhPam2STBDFG3eKAdKr) (download_7z).
 
 <img src="https://user-images.githubusercontent.com/22609465/33633338-0b825560-d9d6-11e7-8177-2840f9dd9a93.png" width="425"/> <img src="https://user-images.githubusercontent.com/22609465/33633711-5aa770a2-d9d7-11e7-9517-916c8169d984.png" width="425"/> 
 Example High-Resolution CelebA images
