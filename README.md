@@ -11,11 +11,11 @@ Example High-Resolution CelebA images
 
 ## Training
 
-The author of this repo is actively training and debuging on 1024x1024 CelebA dataset. If you want to try early, please modifying `progressive_gan.yml` accordingly and run `python train.py`.
+The author of this repo is actively training and debuging on 1024x1024 CelebA dataset. If you want to try early, please modify `progressive_gan.yml` accordingly and run `python train.py`.
 
 ## TensorBoard
 
-Visualization on TensorBoard are supported.
+Visualization on TensorBoard is supported.
 
 ## License
 
