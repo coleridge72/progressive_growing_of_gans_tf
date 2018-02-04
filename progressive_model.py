@@ -17,6 +17,9 @@ from progressive_ops import nn_block, act, progressive_kt
 logger = logging.getLogger()
 
 
+MAX_C = 256
+
+
 class ProgressiveGAN(Model):
 
     """Tensorflow model of progressive gan.
@@ -38,7 +41,7 @@ class ProgressiveGAN(Model):
         """
         assert last_resolution in [4, 8, 16, 32, 64, 128, 256, 512]
         assert current_resolution == last_resolution * 2
-        get_cnum = lambda x: int(min(512, 2 ** (13 - np.log2(x))))
+        get_cnum = lambda x: int(min(MAX_C, 2 ** (13 - np.log2(x))))
 
         x = z
         # with tf.variable_scope(name, reuse=(reuse or current_resolution!=8)):
@@ -90,7 +93,7 @@ class ProgressiveGAN(Model):
         """
         assert last_resolution in [4, 8, 16, 32, 64, 128, 256, 512]
         assert current_resolution == last_resolution * 2
-        get_cnum = lambda x: int(min(512, 2 ** (13 - np.log2(x))))
+        get_cnum = lambda x: int(min(MAX_C, 2 ** (13 - np.log2(x))))
 
         x_in = x
 

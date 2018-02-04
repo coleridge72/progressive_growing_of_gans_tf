@@ -1,8 +1,8 @@
 # tunable training setting
 DATASET: 'celeba_hq'
-BATCH_SIZE: 48
-LAST_RESOLUTION: 512
-CURRENT_RESOLUTION: 1024
+BATCH_SIZE: 64
+LAST_RESOLUTION: 32
+CURRENT_RESOLUTION: 64
 # RESTORE_PREFIX: 'model_logs/20171203125910919153_ilcomp5q_celeba_hq_celeba_hq_8x8/snap'
 # RESTORE_PREFIX: 'model_logs/20171204194751639172_ilcomp5q_celeba_hq_celeba_hq_16x16/snap'
 RANDOM_SEED: 1000
