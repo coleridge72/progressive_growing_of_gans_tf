@@ -54,7 +54,7 @@ def wscale_layer(x):
 
     """
     y = x
-    raise NotImplementedError, "wscale layer is not implemented yet."
+    # raise NotImplementedError, "wscale layer is not implemented yet."
     return y
 
 
