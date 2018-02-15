@@ -2,6 +2,8 @@
 
 This repository contains the **TensorFlow re-implementation (both training and sampling)** of [original implementation (Theano and Lasagne)](https://github.com/tkarras/progressive_growing_of_gans). The author of this repo is actively training and debugging on 1024x1024 CelebA dataset.
 
+**Please checkout our [image inpainting](https://github.com/JiahuiYu/generative_inpainting) project as well. [Demo](jhyu.me/demo) is available for high-resolution CelebA-HQ face inpainting!**
+
 ## Dataset: 1024x1024 CelebA faces
 
 PNG images can be downloaded from [Google Drive](https://drive.google.com/open?id=1_BsFYYGVvcjcPNhPam2STBDFG3eKAdKr) (download_7z).
@@ -24,4 +26,4 @@ License inherits from original [NVIDIA License](https://github.com/tkarras/progr
 ## Requirements
 
 * [NeuralGym 0.0.1-alpha](https://github.com/JiahuiYu/neuralgym)
-* [TensorFlow 1.4](https://www.tensorflow.org/)
+* [TensorFlow >= 1.4](https://www.tensorflow.org/)
